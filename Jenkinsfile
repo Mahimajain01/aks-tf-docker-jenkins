@@ -20,7 +20,6 @@ pipeline {
                 }
             }
         }
-    }
 
         stage('Build Docker Image') {
             steps {
@@ -44,8 +43,3 @@ pipeline {
                 script {
                     sh 'az aks get-credentials --resource-group $RESOURCE_GROUP --name myAKSCluster'
                     sh 'kubectl apply -f deployment.yaml'
-                }
-            }
-        }
-    }
-}

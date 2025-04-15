@@ -52,7 +52,7 @@ pipeline {
             bat """
             echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
             cd %TF_WORKING_DIR%
-            "E:\repos\webApi-ask-tf\terraform" plan -out=tfplan
+            "E:\\repos\\webApi-ask-tf\\terraform" plan -out=tfplan
             """
         }
     }

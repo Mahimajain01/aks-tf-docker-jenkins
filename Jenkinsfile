@@ -11,11 +11,16 @@ pipeline {
         stage('Terraform Init & Apply') {
             steps {
                 dir('terraform') {
-                    sh 'terraform init'
-                    sh 'terraform apply -auto-approve'
+                    script {
+                        docker.image('hashicorp/terraform:1.6.6').inside {
+                            sh 'terraform init'
+                            sh 'terraform apply -auto-approve'
+                        }
+                    }
                 }
             }
         }
+    }
 
         stage('Build Docker Image') {
             steps {

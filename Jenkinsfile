@@ -43,3 +43,8 @@ pipeline {
                 script {
                     bat "az aks get-credentials --resource-group ${RESOURCE_GROUP} --name myAKSCluster"
                     bat "kubectl apply -f deployment.yaml"
+                }
+            }
+        }
+    }
+}

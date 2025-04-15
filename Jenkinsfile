@@ -9,16 +9,17 @@ pipeline {
 
     stages {
         stage('Terraform Init & Apply') {
-            steps {
-                dir('terraform') {
-                    script {
-                        docker.image('hashicorp/terraform:1.6.6').inside {
-                            sh 'terraform init'
-                            sh 'terraform apply -auto-approve'
-                        }
-                    }
-                }
+    steps {
+        dir('terraform') {
+            script {
+                // Use docker run directly to run terraform commands
+                bat 'docker run --rm -v %cd%:/workspace -w /workspace hashicorp/terraform:1.6.6 init'
+                bat 'docker run --rm -v %cd%:/workspace -w /workspace hashicorp/terraform:1.6.6 apply -auto-approve'
             }
+        }
+    }
+}
+
         }
 
         stage('Build Docker Image') {

@@ -33,11 +33,14 @@ pipeline {
         stage('Push Docker Image to ACR') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'acr-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh 'docker login ${ACR_NAME}.azurecr.io -u $USERNAME -p $PASSWORD'
-                    sh 'docker push ${ACR_NAME}.azurecr.io/${IMAGE_NAME}'
+                    sh """
+                    docker login ${ACR_NAME}.azurecr.io -u $USERNAME -p $PASSWORD
+                    docker push ${ACR_NAME}.azurecr.io/${IMAGE_NAME}
+                    """
                 }
             }
         }
+
 
         stage('Deploy to AKS') {
             steps {

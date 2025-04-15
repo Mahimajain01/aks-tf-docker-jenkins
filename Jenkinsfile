@@ -12,14 +12,12 @@ pipeline {
             steps {
                 dir('terraform') {
                     script {
-                // Use docker run directly to run terraform commands
                         bat 'docker run --rm -v %cd%:/workspace -w /workspace hashicorp/terraform:1.6.6 init'
                         bat 'docker run --rm -v %cd%:/workspace -w /workspace hashicorp/terraform:1.6.6 apply -auto-approve'
                     }
                 }
             }
         }
-    }
 
         stage('Build Docker Image') {
             steps {
@@ -29,26 +27,19 @@ pipeline {
             }
         }
 
-
         stage('Push Docker Image to ACR') {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'acr-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh """
-                    docker login ${ACR_NAME}.azurecr.io -u $USERNAME -p $PASSWORD
-                    docker push ${ACR_NAME}.azurecr.io/${IMAGE_NAME}
+                    bat """
+                        docker login ${ACR_NAME}.azurecr.io -u %USERNAME% -p %PASSWORD%
+                        docker push ${ACR_NAME}.azurecr.io/${IMAGE_NAME}
                     """
                 }
             }
         }
 
-
         stage('Deploy to AKS') {
             steps {
                 script {
-                    sh 'az aks get-credentials --resource-group $RESOURCE_GROUP --name myAKSCluster'
-                    sh 'kubectl apply -f deployment.yaml'
-                }
-            }
-        }
-    }
-}
+                    bat "az aks get-credentials --resource-group ${RESOURCE_GROUP} --name myAKSCluster"
+                    bat "kubectl apply -f deployment.yaml"

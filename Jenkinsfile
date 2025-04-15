@@ -24,10 +24,11 @@ pipeline {
         stage('Build Docker Image') {
             steps {
                 script {
-                    dockerImage = docker.build("${ACR_NAME}.azurecr.io/${IMAGE_NAME}")
+                    def dockerImage = docker.build("${ACR_NAME}.azurecr.io/${IMAGE_NAME}")
                 }
             }
         }
+
 
         stage('Push Docker Image to ACR') {
             steps {

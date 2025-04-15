@@ -52,7 +52,7 @@ pipeline {
             bat """
             echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
             cd %TF_WORKING_DIR%
-            "E:\\something\\Capgemini\\Cap-Training\\terraform.exe" plan -out=tfplan
+            "E:\repos\webApi-ask-tf\terraform" plan -out=tfplan
             """
         }
     }

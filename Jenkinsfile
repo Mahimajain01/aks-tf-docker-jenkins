@@ -3,48 +3,103 @@ pipeline {
 
     environment {
         ACR_NAME = 'acr-aks-tf98872'
+        AZURE_CREDENTIALS_ID = 'jenkins-pipeline-sp'
+        ACR_LOGIN_SERVER = "${ACR_NAME}.azurecr.io"
         IMAGE_NAME = 'webapiacrtfjenkinsdocker'
+        IMAGE_TAG = 'latest'
         RESOURCE_GROUP = 'rg-aks-tf'
+        AKS_CLUSTER = 'AKSClustermj'
+        TF_WORKING_DIR = '.'
     }
 
     stages {
-        stage('Terraform Init & Apply') {
+        stage('Checkout') {
             steps {
-                dir('terraform') {
-                    script {
-                        bat 'docker run --rm -v %cd%:/workspace -w /workspace hashicorp/terraform:1.6.6 init'
-                        bat 'docker run --rm -v %cd%:/workspace -w /workspace hashicorp/terraform:1.6.6 apply -auto-approve'
-                    }
-                }
+                git branch: 'main', url: 'https://github.com/Mahimajain01/aks-tf-jenkins.git'
+            }
+        }
+
+        stage('Build .NET App') {
+            steps {
+                bat 'dotnet publish webApi-ask-tf/webApi-ask-tf.csproj -c Release -o out'
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                script {
-                    def dockerImage = docker.build("${ACR_NAME}.azurecr.io/${IMAGE_NAME}")
-                }
+                bat "docker build -t %ACR_LOGIN_SERVER%/%IMAGE_NAME%:%IMAGE_TAG% -f webApi-ask-tf/Dockerfile webApi-ask-tf"
             }
         }
 
-        stage('Push Docker Image to ACR') {
+       stage('Terraform Init') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'acr-creds', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                     bat """
-                        docker login ${ACR_NAME}.azurecr.io -u %USERNAME% -p %PASSWORD%
-                        docker push ${ACR_NAME}.azurecr.io/${IMAGE_NAME}
+                    echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
+                    cd %TF_WORKING_DIR%
+                    echo "Initializing Terraform..."
+                    terraform init
                     """
                 }
             }
         }
 
+        stage('Terraform Plan') {
+    steps {
+        withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
+            bat """
+            echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
+            cd %TF_WORKING_DIR%
+            terraform plan -out=tfplan
+            """
+        }
+    }
+}
+
+
+        stage('Terraform Apply') {
+    steps {
+        withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
+            bat """
+            echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
+            cd %TF_WORKING_DIR%
+            echo "Applying Terraform Plan..."
+            terraform apply -auto-approve tfplan
+            """
+        }
+    }
+}
+        stage('Login to ACR') {
+            steps {
+                bat "az acr login --name %ACR_NAME%"
+            }
+        }
+
+        stage('Push Docker Image to ACR') {
+            steps {
+                bat "docker push %ACR_LOGIN_SERVER%/%IMAGE_NAME%:%IMAGE_TAG%"
+            }
+        }
+
+        stage('Get AKS Credentials') {
+            steps {
+                bat "az aks get-credentials --resource-group %RESOURCE_GROUP% --name %AKS_CLUSTER% --overwrite-existing"
+            }
+        }
+
         stage('Deploy to AKS') {
             steps {
-                script {
-                    bat "az aks get-credentials --resource-group ${RESOURCE_GROUP} --name myAKSCluster"
-                    bat "kubectl apply -f deployment.yaml"
-                }
+                bat "kubectl apply -fwebApi-ask-tf/deployment.yaml"
             }
+        }
+    }
+
+    post {
+        success {
+            echo 'All stages completed successfully!'
+        }
+        failure {
+            echo 'Build failed.'
         }
     }
 }

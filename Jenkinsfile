@@ -10,7 +10,7 @@ pipeline {
         RESOURCE_GROUP = 'rg-aks-tf'
         AKS_CLUSTER = 'AKSClustermj'
         TF_WORKING_DIR = '.'
-        TERRAFORM_PATH = "E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
+        TERRAFORM_PATH = 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
     }
 
     stages {

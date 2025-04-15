@@ -1,29 +1,23 @@
-# See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-# This stage is used when running from VS in fast mode (Default for Debug configuration)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 80
 
+ENV ASPNETCORE_URLS=http://+:8083
 
-# This stage is used to build the service project
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
-ARG BUILD_CONFIGURATION=Release
+USER app
+FROM --platform=$BUILDPLATFORM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+ARG configuration=Release
 WORKDIR /src
-COPY ["webApi-ask-tf/webApi-ask-tf.csproj", "webApi-ask-tf/"]
-RUN dotnet restore "./webApi-ask-tf/webApi-ask-tf.csproj"
+COPY ["webApi-ask-tf.csproj", "./"]
+RUN dotnet restore "webApi-ask-tf.csproj"
 COPY . .
-WORKDIR "/src/webApi-ask-tf"
-RUN dotnet build "./webApi-ask-tf.csproj" -c $BUILD_CONFIGURATION -o /app/build
+WORKDIR "/src/."
+RUN dotnet build "webApi-ask-tf.csproj" -c $configuration -o /app/build
 
-# This stage is used to publish the service project to be copied to the final stage
 FROM build AS publish
-ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./webApi-ask-tf.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+ARG configuration=Release
+RUN dotnet publish "webApi-ask-tf.csproj" -c $configuration -o /app/publish /p:UseAppHost=false
 
-# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .

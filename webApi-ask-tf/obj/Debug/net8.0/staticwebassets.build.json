@@ -1,0 +1,12 @@
+{
+  "Version": 1,
+  "Hash": "QIz7Hn5b8koTuiOZGcbJg+PycRbHLy7YhTtBcH5ey4w=",
+  "Source": "webApi-ask-tf",
+  "BasePath": "_content/webApi-ask-tf",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": [],
+  "Endpoints": []
+}

@@ -1,0 +1,6 @@
+@webApi_ask_tf_HostAddress = http://localhost:5128
+
+GET {{webApi_ask_tf_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

@@ -1,0 +1,71 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "E:\\repos\\webApi-ask-tf\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{1705A4E3-2DAC-4A2A-B611-F9BD0DA7DED3}|webApi-ask-tf\\webApi-ask-tf.csproj|e:\\repos\\webapi-ask-tf\\webapi-ask-tf\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{1705A4E3-2DAC-4A2A-B611-F9BD0DA7DED3}|webApi-ask-tf\\webApi-ask-tf.csproj|solutionrelative:webapi-ask-tf\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1705A4E3-2DAC-4A2A-B611-F9BD0DA7DED3}|webApi-ask-tf\\webApi-ask-tf.csproj|e:\\repos\\webapi-ask-tf\\webapi-ask-tf\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}",
+      "RelativeMoniker": "D:0:0:{1705A4E3-2DAC-4A2A-B611-F9BD0DA7DED3}|webApi-ask-tf\\webApi-ask-tf.csproj|solutionrelative:webapi-ask-tf\\dockerfile||{8B382828-6202-11D1-8870-0000F87579D2}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{1705A4E3-2DAC-4A2A-B611-F9BD0DA7DED3}|webApi-ask-tf\\webApi-ask-tf.csproj|e:\\repos\\webapi-ask-tf\\webapi-ask-tf\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{1705A4E3-2DAC-4A2A-B611-F9BD0DA7DED3}|webApi-ask-tf\\webApi-ask-tf.csproj|solutionrelative:webapi-ask-tf\\properties\\launchsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Program.cs",
+              "DocumentMoniker": "E:\\repos\\webApi-ask-tf\\webApi-ask-tf\\Program.cs",
+              "RelativeDocumentMoniker": "webApi-ask-tf\\Program.cs",
+              "ToolTip": "E:\\repos\\webApi-ask-tf\\webApi-ask-tf\\Program.cs",
+              "RelativeToolTip": "webApi-ask-tf\\Program.cs",
+              "ViewState": "AgIAAA4AAACAmZmZmZkdwBgAAAAfAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-15T06:06:05.819Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "launchSettings.json",
+              "DocumentMoniker": "E:\\repos\\webApi-ask-tf\\webApi-ask-tf\\Properties\\launchSettings.json",
+              "RelativeDocumentMoniker": "webApi-ask-tf\\Properties\\launchSettings.json",
+              "ToolTip": "E:\\repos\\webApi-ask-tf\\webApi-ask-tf\\Properties\\launchSettings.json",
+              "RelativeToolTip": "webApi-ask-tf\\Properties\\launchSettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAvAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-04-15T05:57:54.478Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Dockerfile",
+              "DocumentMoniker": "E:\\repos\\webApi-ask-tf\\webApi-ask-tf\\Dockerfile",
+              "RelativeDocumentMoniker": "webApi-ask-tf\\Dockerfile",
+              "ToolTip": "E:\\repos\\webApi-ask-tf\\webApi-ask-tf\\Dockerfile",
+              "RelativeToolTip": "webApi-ask-tf\\Dockerfile",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAAAoAAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2025-04-15T05:49:46.449Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

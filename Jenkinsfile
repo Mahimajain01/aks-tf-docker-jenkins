@@ -46,18 +46,18 @@ pipeline {
             }
 
 
-        stage('Terraform Plan') {
+       stage('Terraform Plan') {
     steps {
         withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-            bat 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
             bat """
             echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
             cd %TF_WORKING_DIR%
-            terraform plan -out=tfplan
+            "E:\\something\\Capgemini\\Cap-Training\\terraform.exe" plan -out=tfplan
             """
         }
     }
 }
+
 
 
         stage('Terraform Apply') {

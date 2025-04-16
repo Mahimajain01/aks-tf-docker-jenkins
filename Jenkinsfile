@@ -11,9 +11,8 @@ pipeline {
         AKS_CLUSTER = 'AKSClustermj'
         // TF_WORKING_DIR = '.'
         // TF_WORKING_DIR = 'E:\\repos'
-        TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform'
+        TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform\\main.tf'
         TERRAFORM_PATH = 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
-        // PATH = "E:\\something\\Capgemini\\Cap-Training\\terraform.exe"
     }
 
     stages {

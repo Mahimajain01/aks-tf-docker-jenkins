@@ -11,5 +11,5 @@ variable "acr_name" {
 }
 
 variable "aks_name" {
-  default = "AKSClustermj"
+  default = "aksclustermj"
 }

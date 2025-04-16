@@ -10,7 +10,7 @@ pipeline {
         RESOURCE_GROUP = 'rg-aks-tf'
         AKS_CLUSTER = 'AKSClustermj'
         TF_WORKING_DIR = 'terraform'
-        TERRAFORM_PATH = 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
+        PATH = "$PATH;E:\\something\\Capgemini\\Cap-Training\\terraform.exe"
     }
 
     stages {
@@ -22,35 +22,35 @@ pipeline {
 
         stage('Build .NET App') {
             steps {
-                bat 'dotnet publish webApi-ask-tf/webApi-ask-tf.csproj -c Release -o out'
+                bat """
+                echo "Checking .NET SDK version"
+                dotnet --version
+                dotnet publish webApi-ask-tf/webApi-ask-tf.csproj -c Release --framework net8.0
+                """
             }
         }
 
         stage('Build Docker Image') {
             steps {
-                bat "docker build -t %ACR_LOGIN_SERVER%/%IMAGE_NAME%:%IMAGE_TAG% -f webApi-ask-tf/Dockerfile webApi-ask-tf"
+                bat "docker build -t ${ACR_LOGIN_SERVER}/${IMAGE_NAME}:${IMAGE_TAG} -f webApi-ask-tf/Dockerfile ."
             }
         }
 
-       stage('Terraform Init') {
+        stage('Terraform Init') {
             steps {
                 withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                     bat """
-                        echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
-                        cd %TF_WORKING_DIR%
-                        echo "Initializing Terraform..."
-                        \"%TERRAFORM_PATH%\" init
-                        """
-                    }
+                    cd %TF_WORKING_DIR%
+                    terraform init
+                    """
                 }
             }
+        }
 
-
-       stage('Terraform Plan') {
+        stage('Terraform Plan') {
             steps {
                 withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                     bat """
-                    echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
                     cd %TF_WORKING_DIR%
                     terraform plan -out=tfplan
                     """
@@ -58,20 +58,24 @@ pipeline {
             }
         }
 
-
-
-        stage('Terraform Apply') {
-    steps {
-        withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-            bat """
-            echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
-            cd %TF_WORKING_DIR%
-            echo "Applying Terraform Plan..."
-            terraform apply -auto-approve tfplan
-            """
+       stage('Terraform Apply') {
+            steps {
+                withCredentials([azureServicePrincipal(
+                    credentialsId: 'jenkins-pipeline-sp',
+                    subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
+                    clientIdVariable: 'AZURE_CLIENT_ID',
+                    clientSecretVariable: 'AZURE_CLIENT_SECRET',
+                    tenantIdVariable: 'AZURE_TENANT_ID'
+                )]) {
+                    bat """
+                    cd %TF_WORKING_DIR%
+                    terraform apply -auto-approve tfplan
+                    """
+                }
+            }
         }
-    }
-}
+
+
         stage('Login to ACR') {
             steps {
                 bat "az acr login --name %ACR_NAME%"
@@ -92,7 +96,7 @@ pipeline {
 
         stage('Deploy to AKS') {
             steps {
-                bat "kubectl apply -fwebApi-ask-tf/deployment.yaml"
+                bat "kubectl apply -f deployment.yaml"
             }
         }
     }

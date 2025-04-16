@@ -11,7 +11,7 @@ pipeline {
         AKS_CLUSTER = 'AKSClustermj'
         // TF_WORKING_DIR = '.'
         // TF_WORKING_DIR = 'E:\\repos'
-        TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform\\main.tf'
+        TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform'
         TERRAFORM_PATH = 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
         // PATH = "E:\\something\\Capgemini\\Cap-Training\\terraform.exe"
     }
@@ -50,7 +50,7 @@ pipeline {
                 withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                     bat """
                     cd %TF_WORKING_DIR%
-                    E:\\repos\\webApi-ask-tf\\terraform plan -out=tfplan
+                    terraform plan -out=tfplan
                     """
                 }
             }

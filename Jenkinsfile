@@ -9,8 +9,6 @@ pipeline {
         IMAGE_TAG = 'latest'
         RESOURCE_GROUP = 'rg-aks-tf'
         AKS_CLUSTER = 'AKSClustermj'
-        // TF_WORKING_DIR = '.'
-        // TF_WORKING_DIR = 'E:\\repos'
         TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform'
         TERRAFORM_PATH = 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
     }
@@ -38,28 +36,11 @@ pipeline {
             }
         }
 
-        // stage('Terraform Init') {
-        //     steps {
-        //         bat '"%TERRAFORM_PATH%" -chdir=%TF_WORKING_DIR% init'
-        //     }
-        // }
-
-        // stage('Terraform Plan') {
-        //     steps {
-        //         withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-        //             bat """
-        //             cd %TF_WORKING_DIR%
-        //             terraform plan -out=tfplan
-        //             """
-        //         }
-        //     }
-        // }
-
         stage('Terraform Init') {
             steps {
                 bat """
                 cd %TF_WORKING_DIR%
-                "E:\\something\\Capgemini\\Cap-Training\\terraform.exe" init
+                "%TERRAFORM_PATH%" init
                 """
             }
         }
@@ -74,10 +55,11 @@ pipeline {
                 }
             }
         }
-       stage('Terraform Apply') {
+
+        stage('Terraform Apply') {
             steps {
                 withCredentials([azureServicePrincipal(
-                    credentialsId: 'jenkins-pipeline-sp',
+                    credentialsId: AZURE_CREDENTIALS_ID,
                     subscriptionIdVariable: 'AZURE_SUBSCRIPTION_ID',
                     clientIdVariable: 'AZURE_CLIENT_ID',
                     clientSecretVariable: 'AZURE_CLIENT_SECRET',
@@ -85,12 +67,11 @@ pipeline {
                 )]) {
                     bat """
                     cd %TF_WORKING_DIR%
-                    E:\\repos\\webApi-ask-tf\\terraform apply -auto-approve tfplan
+                    "%TERRAFORM_PATH%" apply -auto-approve tfplan
                     """
                 }
             }
         }
-
 
         stage('Login to ACR') {
             steps {

@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        ACR_NAME = 'acr-aks-tf98872'
+        ACR_NAME = 'acrakstf98872'
         AZURE_CREDENTIALS_ID = 'jenkins-pipeline-sp'
         ACR_LOGIN_SERVER = "${ACR_NAME}.azurecr.io"
         IMAGE_NAME = 'webapiacrtfjenkinsdocker'

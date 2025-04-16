@@ -57,7 +57,10 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                bat '"%TERRAFORM_PATH%" init -chdir="%TF_WORKING_DIR%"'
+                bat """
+                cd %TF_WORKING_DIR%
+                "E:\\something\\Capgemini\\Cap-Training\\terraform.exe" init
+                """
             }
         }
 

@@ -1,7 +1,7 @@
 # Use .NET 8.0 SDK image for building the app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY . .
+COPY ["webApi-ask-tf/webApi-ask-tf.csproj", "./"]
 RUN dotnet restore
 RUN dotnet publish -c Release -o /app/publish
 

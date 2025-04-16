@@ -12,7 +12,7 @@ pipeline {
         // TF_WORKING_DIR = '.'
         // TF_WORKING_DIR = 'E:\\repos'
         TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform\\main.tf'
-        TERRAFORM_EXE = 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
+        TERRAFORM_PATH = 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
         // PATH = "E:\\something\\Capgemini\\Cap-Training\\terraform.exe"
     }
 
@@ -41,12 +41,7 @@ pipeline {
 
         stage('Terraform Init') {
             steps {
-                withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-                    bat """
-                    cd %TF_WORKING_DIR%
-                    E:\\repos\\webApi-ask-tf\\terraform init
-                    """
-                }
+                bat '"%TERRAFORM_PATH%" -chdir=%TF_WORKING_DIR% init'
             }
         }
 

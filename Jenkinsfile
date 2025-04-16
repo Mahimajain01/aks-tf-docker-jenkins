@@ -50,7 +50,7 @@ pipeline {
             steps {
                 withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                     bat """
-                    // echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
+                    echo "Navigating to Terraform Directory: %TF_WORKING_DIR%"
                     cd %TF_WORKING_DIR%
                     terraform plan -out=tfplan
                     """

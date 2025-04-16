@@ -38,36 +38,36 @@ pipeline {
             }
         }
 
-        stage('Terraform Init') {
-            steps {
-                bat '"%TERRAFORM_PATH%" -chdir=%TF_WORKING_DIR% init'
-            }
-        }
-
-        stage('Terraform Plan') {
-            steps {
-                withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-                    bat """
-                    cd %TF_WORKING_DIR%
-                    terraform plan -out=tfplan
-                    """
-                }
-            }
-        }
-
         // stage('Terraform Init') {
         //     steps {
-        //         bat '"%TERRAFORM_PATH%" init -chdir="%TF_WORKING_DIR%"'
+        //         bat '"%TERRAFORM_PATH%" -chdir=%TF_WORKING_DIR% init'
         //     }
         // }
 
         // stage('Terraform Plan') {
         //     steps {
         //         withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-        //             bat '"%TERRAFORM_PATH%" plan -chdir="%TF_WORKING_DIR%" -out=tfplan'
+        //             bat """
+        //             cd %TF_WORKING_DIR%
+        //             terraform plan -out=tfplan
+        //             """
         //         }
         //     }
         // }
+
+        stage('Terraform Init') {
+            steps {
+                bat '"%TERRAFORM_PATH%" init -chdir="%TF_WORKING_DIR%"'
+            }
+        }
+
+        stage('Terraform Plan') {
+            steps {
+                withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
+                    bat '"%TERRAFORM_PATH%" plan -chdir="%TF_WORKING_DIR%" -out=tfplan'
+                }
+            }
+        }
 
        stage('Terraform Apply') {
             steps {

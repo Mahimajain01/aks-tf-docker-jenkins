@@ -67,11 +67,13 @@ pipeline {
         stage('Terraform Plan') {
             steps {
                 withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
-                    bat '"%TERRAFORM_PATH%" plan -chdir="%TF_WORKING_DIR%" -out=tfplan'
+                    bat """
+                    cd %TF_WORKING_DIR%
+                    "%TERRAFORM_PATH%" plan -out=tfplan
+                    """
                 }
             }
         }
-
        stage('Terraform Apply') {
             steps {
                 withCredentials([azureServicePrincipal(

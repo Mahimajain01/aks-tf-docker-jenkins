@@ -21,15 +21,15 @@ pipeline {
             }
         }
 
-        stage('Build .NET App') {
-            steps {
-                bat """
-                echo "Checking .NET SDK version"
-                dotnet --version
-                dotnet publish webApi-ask-tf/webApi-ask-tf.csproj -c Release --framework net8.0
-                """
-            }
-        }
+        // stage('Build .NET App') {
+        //     steps {
+        //         bat """
+        //         echo "Checking .NET SDK version"
+        //         dotnet --version
+        //         dotnet publish webApi-ask-tf/webApi-ask-tf.csproj -c Release --framework net8.0
+        //         """
+        //     }
+        // }
 
         stage('Build Docker Image') {
             steps {

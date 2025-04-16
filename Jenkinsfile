@@ -12,6 +12,7 @@ pipeline {
         // TF_WORKING_DIR = '.'
         // TF_WORKING_DIR = 'E:\\repos'
         TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform'
+        TERRAFORM_EXE = 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
         // PATH = "E:\\something\\Capgemini\\Cap-Training\\terraform.exe"
     }
 

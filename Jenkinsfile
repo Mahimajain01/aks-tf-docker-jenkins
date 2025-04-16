@@ -9,7 +9,8 @@ pipeline {
         IMAGE_TAG = 'latest'
         RESOURCE_GROUP = 'rg-aks-tf'
         AKS_CLUSTER = 'AKSClustermj'
-        TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform'
+        // TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform'
+        TF_WORKING_DIR = '.'
         TERRAFORM_PATH = 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
     }
 

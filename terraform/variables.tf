@@ -1,15 +1,15 @@
 variable "location" {
-  default = "East US"
+  default = "East US 2"
 }
 
 variable "resource_group_name" {
-  default = "myResourceGroup"
+  default = "rg-aks-tf"
 }
 
 variable "acr_name" {
-  default = "myacrregistry123"  # must be globally unique and lowercase
+  default = "acr-aks-tf98872"  # must be globally unique and lowercase
 }
 
 variable "aks_name" {
-  default = "myAKSCluster"
+  default = "AKSClustermj"
 }

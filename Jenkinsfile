@@ -9,9 +9,9 @@ pipeline {
         IMAGE_TAG = 'latest'
         RESOURCE_GROUP = 'rg-aks-tf'
         AKS_CLUSTER = 'AKSClustermj'
-        TF_WORKING_DIR = '.'
+        // TF_WORKING_DIR = '.'
         // TF_WORKING_DIR = 'E:\\repos'
-        // TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform'
+        TF_WORKING_DIR = 'E:\\repos\\webApi-ask-tf\\terraform'
         // PATH = "E:\\something\\Capgemini\\Cap-Training\\terraform.exe"
     }
 
@@ -43,7 +43,7 @@ pipeline {
                 withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                     bat """
                     cd %TF_WORKING_DIR%
-                    terraform init
+                    E:\\repos\\webApi-ask-tf\\terraform init
                     """
                 }
             }
@@ -54,7 +54,7 @@ pipeline {
                 withCredentials([azureServicePrincipal(credentialsId: AZURE_CREDENTIALS_ID)]) {
                     bat """
                     cd %TF_WORKING_DIR%
-                    terraform plan -out=tfplan
+                    E:\\repos\\webApi-ask-tf\\terraform plan -out=tfplan
                     """
                 }
             }
@@ -71,7 +71,7 @@ pipeline {
                 )]) {
                     bat """
                     cd %TF_WORKING_DIR%
-                    terraform apply -auto-approve tfplan
+                    E:\\repos\\webApi-ask-tf\\terraform apply -auto-approve tfplan
                     """
                 }
             }

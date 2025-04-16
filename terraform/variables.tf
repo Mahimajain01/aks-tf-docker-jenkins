@@ -7,7 +7,7 @@ variable "resource_group_name" {
 }
 
 variable "acr_name" {
-  default = "acraks98872"  # must be globally unique and lowercase
+  default = "acrakstf98872"  # must be globally unique and lowercase
 }
 
 variable "aks_name" {

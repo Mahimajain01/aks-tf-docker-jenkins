@@ -8,7 +8,7 @@ pipeline {
         IMAGE_NAME = 'webapiacrtfjenkinsdocker'
         IMAGE_TAG = 'latest'
         RESOURCE_GROUP = 'rg-aks-tf'
-        AKS_CLUSTER = 'AKSClustermj'
+        AKS_CLUSTER = 'aksclustermj'
         TF_WORKING_DIR = 'terraform'
         // TF_WORKING_DIR = '.'
         TERRAFORM_PATH = 'E:\\something\\Capgemini\\Cap-Training\\terraform.exe'
